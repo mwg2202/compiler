@@ -3,8 +3,15 @@ build:
 	cmake ..
 	make
 	sudo make install
+	cd ../../../../
+	java -jar antlr-4.8-complete.jar -Dlanguage=Cpp ProjectFlight.g4
+	g++ -I./include/antlr4-runtime -L./lib main.cpp -o main.o
+	cd ..
+
+
 clean:
 	rm -r ./build
+	rm 
 
 testAntlr:
 	mkdir -p ./build/antlr
