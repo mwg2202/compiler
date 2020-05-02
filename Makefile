@@ -5,13 +5,13 @@ build:
 	sudo make install
 	cd ../../../../
 	java -jar antlr-4.8-complete.jar -Dlanguage=Cpp ProjectFlight.g4
-	g++ -I./include/antlr4-runtime -L./lib main.cpp -o main.o
 	cd ..
 
+compileC:
+	c++ src/*.cpp src/include/antlr4-grammar/*.cpp -Wall -Wextra -I ./src/include/antlr4-runtime -L ./src/lib -l antlr4-runtime -I./src/include/antlr4-grammar -o build/a.out
 
 clean:
 	rm -r ./build
-	rm 
 
 testAntlr:
 	mkdir -p ./build/antlr

@@ -2,7 +2,7 @@
 // Generated from /home/mwglen/compiler/src/Flight.g4 by ANTLR 4.7.1
 
 
-#include "FlightVisitor.h"
+#include "FlightListener.h"
 
 #include "FlightParser.h"
 
@@ -62,11 +62,16 @@ size_t FlightParser::FileContext::getRuleIndex() const {
   return FlightParser::RuleFile;
 }
 
-antlrcpp::Any FlightParser::FileContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlightVisitor*>(visitor))
-    return parserVisitor->visitFile(this);
-  else
-    return visitor->visitChildren(this);
+void FlightParser::FileContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterFile(this);
+}
+
+void FlightParser::FileContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitFile(this);
 }
 
 FlightParser::FileContext* FlightParser::file() {
@@ -239,11 +244,16 @@ size_t FlightParser::StatementContext::getRuleIndex() const {
   return FlightParser::RuleStatement;
 }
 
-antlrcpp::Any FlightParser::StatementContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlightVisitor*>(visitor))
-    return parserVisitor->visitStatement(this);
-  else
-    return visitor->visitChildren(this);
+void FlightParser::StatementContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterStatement(this);
+}
+
+void FlightParser::StatementContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitStatement(this);
 }
 
 FlightParser::StatementContext* FlightParser::statement() {
@@ -649,11 +659,16 @@ size_t FlightParser::ExpressionContext::getRuleIndex() const {
   return FlightParser::RuleExpression;
 }
 
-antlrcpp::Any FlightParser::ExpressionContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlightVisitor*>(visitor))
-    return parserVisitor->visitExpression(this);
-  else
-    return visitor->visitChildren(this);
+void FlightParser::ExpressionContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterExpression(this);
+}
+
+void FlightParser::ExpressionContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitExpression(this);
 }
 
 FlightParser::ExpressionContext* FlightParser::expression() {
@@ -840,11 +855,16 @@ size_t FlightParser::ArgumentContext::getRuleIndex() const {
   return FlightParser::RuleArgument;
 }
 
-antlrcpp::Any FlightParser::ArgumentContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlightVisitor*>(visitor))
-    return parserVisitor->visitArgument(this);
-  else
-    return visitor->visitChildren(this);
+void FlightParser::ArgumentContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterArgument(this);
+}
+
+void FlightParser::ArgumentContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitArgument(this);
 }
 
 FlightParser::ArgumentContext* FlightParser::argument() {
@@ -906,11 +926,16 @@ size_t FlightParser::WhitespaceContext::getRuleIndex() const {
   return FlightParser::RuleWhitespace;
 }
 
-antlrcpp::Any FlightParser::WhitespaceContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<FlightVisitor*>(visitor))
-    return parserVisitor->visitWhitespace(this);
-  else
-    return visitor->visitChildren(this);
+void FlightParser::WhitespaceContext::enterRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->enterWhitespace(this);
+}
+
+void FlightParser::WhitespaceContext::exitRule(tree::ParseTreeListener *listener) {
+  auto parserListener = dynamic_cast<FlightListener *>(listener);
+  if (parserListener != nullptr)
+    parserListener->exitWhitespace(this);
 }
 
 FlightParser::WhitespaceContext* FlightParser::whitespace() {
