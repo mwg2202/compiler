@@ -1,59 +1,117 @@
 grammar Flight;
 
-// Non-Terminal Symbols
-file: whitespace* statement (whitespace* '\n' whitespace* statement)* whitespace* EOF;
+/* Non-Terminals */
+file            : ws? ((otherCodeRegion|flightCode) ws?)* EOF;
+otherCodeRegion : OTHERLANGUAGE ws? OTHERCODE;
+flightCode      : (statement (ws? (NL|SC))+ )+;
+ 
+statement       : infixStatement
+                | prefixStatement
+                ;
 
-statement: OPENPARENTHESIS whitespace* KEYWORD (whitespace+ expression)* whitespace*  CLOSEPARENTHESIS ((SPACE | TAB)* statement)*
-        |  OPENBRACE whitespace* KEYWORD (whitespace+ expression)* whitespace* CLOSEBRACE ((SPACE | TAB)* statement)*
-        |  OPENBRACKET whitespace* KEYWORD (whitespace+ expression)* whitespace* CLOSEBRACKET ((SPACE | TAB)* statement)*
-        |  KEYWORD ((SPACE | TAB)+ expression)*
-        ;
+infixStatement  : (argument SPACE+)? infixOperator (SPACE+ argument)?;
 
-expression: OPENPARENTHESIS whitespace* statement whitespace* CLOSEPARENTHESIS
-        |   OPENBRACKET whitespace* statement whitespace* CLOSEBRACKET
-        |   OPENBRACE whitespace* statement whitespace* CLOSEBRACE
-        |   argument
-        ;
+prefixStatement : KEYWORD (SPACE+ argument)*; // PrefixOperator
+
+argument        : LP ws? statement ws? RP
+                | expression
+                ;
+
+expression      : expression ws? (POWER|ROOT) ws? expression
+                | expression ws? (TIMES|DIVIDE|MODULO) ws? expression
+                | expression ws? (PLUS|MINUS) ws? expression
+                | datatype
+                | KEYWORD  // Variable
+                ;
+
+datatype        : HEXVALUE
+                | UINT
+                | INT
+                | CHAR
+                | STRING
+                | BOOL
+                ;
+
+infixOperator   : PLUS
+                | MINUS
+                | DIVIDE
+                | TIMES
+                | MODULO
+                | POWER
+                | ROOT
+                | EQUALS
+                | ISEQUALTO
+                | NOTEQUAL
+                | GREATERTHAN
+                | LESSTHAN
+                | GREATERTHANEQUALTO
+                | LESSTHANEQUALTO
+                | ARROW
+                | DOUBLEARROW
+                | TILDE
+                ;
+
+ws      : (NL|SPACE|TAB)+;
+
+/* Terminals */
+COMMENT         : ('##' .*? '##'
+                | '#' .*? '\n') -> skip;
+
+OTHERCODE       : '`' (~[`])* '`';
+OTHERLANGUAGE   : '__x64__'
+                | '__x86__'
+                | '__x16__'
+                | '__ARM64__'
+                | '__CXX__'
+                | '__C__'
+                ;
+
+CHAR            : '\'' .*? '\'';
+STRING          : '"' .*? '"';
+HEXVALUE        : ('0')? [xX] [0-9]+;
+UINT            : [0-9]+;
+INT             : ('+'|'-')? [0-9]+;
+DECIMAL         : [0-9]+ '.' [0-9]+;
+BOOL            : [Tt] [Rr] [Uu] [Ee]
+                | [Ff] [Aa] [Ll] [Ss] [Ee]
+                ;
+
+PLUS            : '+';
+MINUS           : '-';
+DIVIDE          : '/';
+TIMES           : '*';
+MODULO          : '%';
+POWER           : '^';
+ROOT            : 'root';
+EQUALS          : '='; // Set a variable
+ISEQUALTO       : '==';
+NOTEQUAL        : '!=';
+LESSTHAN        : '<';
+GREATERTHAN             : '>';
+LESSTHANEQUALTO         : '<=';
+GREATERTHANEQUALTO      : '>=';
+ARROW                   : '->';
+DOUBLEARROW             : '=>';
+TILDE                   : '~';
+
+LP  :   '(';
+RP  :   ')';
+LB  :   '[';
+RB  :   ']';
+L3  :   '{';
+R3  :   '}';
+SC  :   ';';
+
+TAB     : '\t';
+SPACE   : ' ';
+NL      : '\n';
 
 
-argument: NULLSTRING
-        |   CHARSTRING
-        |   HEXVALUE
-        |   FLOAT
-        |   INTEGER
-        |   KEYWORD
-        ;
+KEYWORD         : [a-zA-Z] [a-zA-Z0-9]*; // Keywords are both variables and operators  
 
-whitespace              : SPACE
-                        | NEWLINE
-                        | TAB
-                        ; 
-
-// Terminal Symbols
-
-OPENPARENTHESIS         : '(';
-CLOSEPARENTHESIS        : ')';
-OPENBRACE               : '{';
-CLOSEBRACE              : '}';
-OPENBRACKET             : '[';
-CLOSEBRACKET            : ']';
-
-SPACE               : ' ';
-NEWLINE             : '\n';
-TAB                 : '\t';
-
-
-KEYWORD            :   ~[\t\n 0-9"'}{)([\]] ~[\t\n }{)([\]]*;
-
-NULLSTRING          :   '"' (~["]* ESCAPEDVARIABLE)* ~["]* '"';
-CHARSTRING          :   '\'' ([\\']* ~[']*)* '\'';
-INTEGER             :   [0-9]+;
-FLOAT               :   [0-9]* [.] [0-9]*;
-HEXVALUE            :   ('0')? [xX] [0-9]+;
-
-fragment ESCAPEDVARIABLE        :   '\\"'
-                                |   '\\n'
-                                |   '\\t'
-                                ;
-
-
+// Valid Keywords for Other Code Regions
+/*
+CXX
+C
+ASM
+*/

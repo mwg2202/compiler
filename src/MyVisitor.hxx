@@ -7,5 +7,5 @@ public:
     antlrcpp::Any visitStatement(FlightParser::StatementContext *ctx);
     antlrcpp::Any visitExpression(FlightParser::ExpressionContext *ctx);
     antlrcpp::Any visitArgument(FlightParser::ArgumentContext *ctx);
-    antlrcpp::Any visitWhitespace(FlightParser::WhitespaceContext *ctx);
+    antlrcpp::Any visitWhitespace(FlightParser::WsContext *ctx);
 };

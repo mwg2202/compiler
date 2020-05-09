@@ -15,43 +15,15 @@ void MyListener::exitFile(FlightParser::FileContext *) {
     std::cout << "Exited File" << std::endl;
 }
 
-/* Statement */
-void MyListener::enterStatement(FlightParser::StatementContext *) {
+/* misc */
 
-}
-void MyListener::exitStatement(FlightParser::StatementContext *) {
-    std::cout << "Exited File" << std::endl;
-}
-
-/* Expression */
-void MyListener::enterExpression(FlightParser::ExpressionContext *) {}
-void MyListener::exitExpression(FlightParser::ExpressionContext *) {
-    std::cout << "Exited File" << std::endl;
-}
-
-/* Argument */
-void MyListener::enterArgument(FlightParser::ArgumentContext *) {
-
-}
-void MyListener::exitArgument(FlightParser::ArgumentContext *) {
-
-}
-void MyListener::enterWhitespace(FlightParser::WhitespaceContext *) {
-
-}
-void MyListener::exitWhitespace(FlightParser::WhitespaceContext *) {
-    std::cout << "Exited Whitespace" << std::endl;
-}
-
-/* Every Rule */
 void MyListener::enterEveryRule(antlr4::ParserRuleContext *) {
-    std::cout << "1";
+
 }
 void MyListener::exitEveryRule(antlr4::ParserRuleContext *) {
-    std::cout << "2";
+    
 }
 
-/* misc */
 void MyListener::visitTerminal(antlr4::tree::TerminalNode *) {
     std::cout << "Visited Terminal Node" << std::endl;
 }
