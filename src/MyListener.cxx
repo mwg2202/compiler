@@ -15,6 +15,10 @@ void MyListener::exitFile(FlightParser::FileContext *) {
     std::cout << "Exited File" << std::endl;
 }
 
+void MyListener::enterInfixStatement(FlightParser::InfixStatementContext *) {
+
+}
+
 /* misc */
 
 void MyListener::enterEveryRule(antlr4::ParserRuleContext *) {

@@ -18,6 +18,9 @@ public:
   void visitTerminal(antlr4::tree::TerminalNode *) override;
   void visitErrorNode(antlr4::tree::ErrorNode *) override;
 
+  void enterInfixStatement(FlightParser::InfixStatementContext *) override;
+  void exitInfixStatement(FlightParser::InfixStatementContext *) override;
+
   private:
     std::vector<std::string> variables;
 };

@@ -5,26 +5,29 @@ file            : ws? ((otherCodeRegion|flightCode) ws?)* EOF;
 otherCodeRegion : OTHERLANGUAGE ws? OTHERCODE;
 flightCode      : (statement (ws? (NL|SC))+ )+;
  
-statement       : infixStatement
+statement       : LP ws? statement ws? RP
+                | infixStatement
                 | prefixStatement
                 ;
 
 infixStatement  : (argument SPACE+)? infixOperator (SPACE+ argument)?;
 
-prefixStatement : KEYWORD (SPACE+ argument)*; // PrefixOperator
+prefixStatement : IDENTIFIER (SPACE+ argument)*; // PrefixOperator
 
 argument        : LP ws? statement ws? RP
                 | expression
                 ;
 
-expression      : expression ws? (POWER|ROOT) ws? expression
+expression      : LP ws? expression ws? RP
+                | expression ws? (POWER|ROOT) ws? expression
                 | expression ws? (TIMES|DIVIDE|MODULO) ws? expression
                 | expression ws? (PLUS|MINUS) ws? expression
                 | datatype
-                | KEYWORD  // Variable
+                | IDENTIFIER  // Variable
                 ;
 
-datatype        : HEXVALUE
+datatype        : LP ws? datatype ws? RP
+                | HEXVALUE
                 | UINT
                 | INT
                 | CHAR
@@ -73,8 +76,7 @@ UINT            : [0-9]+;
 INT             : ('+'|'-')? [0-9]+;
 DECIMAL         : [0-9]+ '.' [0-9]+;
 BOOL            : [Tt] [Rr] [Uu] [Ee]
-                | [Ff] [Aa] [Ll] [Ss] [Ee]
-                ;
+                | [Ff] [Aa] [Ll] [Ss] [Ee];
 
 PLUS            : '+';
 MINUS           : '-';
@@ -107,7 +109,7 @@ SPACE   : ' ';
 NL      : '\n';
 
 
-KEYWORD         : [a-zA-Z] [a-zA-Z0-9]*; // Keywords are both variables and operators  
+IDENTIFIER 	        : [a-zA-Z] [a-zA-Z0-9]*; // Keywords are both variables and operators  
 
 // Valid Keywords for Other Code Regions
 /*
